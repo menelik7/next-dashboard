@@ -7,6 +7,14 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
+export type LoginState = {
+  errors?: {
+    email?: string;
+    password?: string;
+  };
+  errorMessage?: string | null;
+};
+
 export type State = {
   errors?: {
     customerId?: string[];
@@ -32,22 +40,33 @@ const FormSchema = z.object({
 
 // AUTHENTICATION - LOG IN
 export async function authenticate(
-  prevState: string | undefined,
+  prevState: LoginState,
   formData: FormData,
-) {
+): Promise<LoginState> {
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  if (!email) {
+    return { errors: { email: 'Please provide an email.' } };
+  }
+  if (!password) {
+    return { errors: { password: 'Please provide a password.' } };
+  }
+
   try {
     await signIn('credentials', formData);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return 'Invalid credentials.';
+          return { errorMessage: 'Invalid credentials.' };
         default:
-          return 'Something went wrong.';
+          return { errorMessage: 'Something went wrong.' };
       }
     }
-    throw error;
   }
+
+  return {};
 }
 
 // CREATE INVOICE

@@ -19,7 +19,11 @@ export function CardSkeleton() {
 }
 
 export function CardsSkeleton({ numOfSkeletons }: { numOfSkeletons: number }) {
-  return Array(numOfSkeletons).fill(<CardSkeleton />);
+  const arr = [];
+  for (let i = 0; i < numOfSkeletons; i++) {
+    arr.push(<CardSkeleton key={i} />);
+  }
+  return arr;
 }
 
 export function RevenueChartSkeleton() {
@@ -53,7 +57,11 @@ export function InvoiceSkeleton() {
 }
 
 export function InvoicesSkeletons(num: number) {
-  return Array(num).fill(<InvoiceSkeleton />);
+  const arr = [];
+  for (let i = 0; i < num; i++) {
+    arr.push(<InvoiceSkeleton key={i} />);
+  }
+  return arr;
 }
 
 export function LatestInvoicesSkeleton() {

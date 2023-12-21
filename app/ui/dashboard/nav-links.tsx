@@ -26,7 +26,7 @@ export default function NavLinks() {
       icon: DocumentDuplicateIcon,
     },
     { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
-    { name: session.data?.user?.name, href: '/', icon: UserIcon },
+    { name: session.data?.user?.email || 'User', href: '/', icon: UserIcon },
   ];
 
   return (
