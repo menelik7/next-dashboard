@@ -39,10 +39,7 @@ const FormSchema = z.object({
 });
 
 // AUTHENTICATION - LOG IN
-export async function authenticate(
-  prevState: LoginState,
-  formData: FormData,
-): Promise<LoginState> {
+export async function authenticate(prevState: LoginState, formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
@@ -66,7 +63,7 @@ export async function authenticate(
     }
   }
 
-  return {};
+  redirect('/dashboard');
 }
 
 // CREATE INVOICE
